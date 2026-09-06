@@ -40,12 +40,24 @@
     <div class="map-overlay top">
     <div class="map-overlay-inner">
     <h2>Public and Affordable Housing Flood Risk</h2>
-    <!-- INSERT TEXT HERE -->
+        <p>This map shows the extent of storm surge flooding in New York City caused by
+    Hurricane Sandy in 2012, overlaid with the locations of NYCHA public housing
+    developments. Together they show which public housing sites fell within the
+    inundation zone — a question that matters because residents of public and
+    affordable housing often have the fewest resources to recover from a flood.</p>
+
+     <p>Data sources:
+    <a href="https://data.cityofnewyork.us/Environment/Sandy-Inundation-Zone/uyj8-7rv5" target="_blank">Sandy Inundation Zone</a>
+    and
+    <a href="https://data.cityofnewyork.us/Housing-Development/NYCHA-Public-Housing-Developments-Map/npwq-dpkb" target="_blank">NYCHA Public Housing Developments Map</a>,
+    both from NYC Open Data. Basemap by Mapbox.</p>
     </div>
     </div>
 
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGVueGlhb3llIiwiYSI6ImNtdHA5NnhucDBpN3IyenBybTljbTBraXUifQ.hFhS4lMNxJ6FrxPMAUpdpw';
+
+
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -53,6 +65,10 @@ const map = new mapboxgl.Map({
   center: [-73.935242, 40.730610],
   zoom: 12
 });
+
+
+
+
 
 map.on('load', function () {
 
@@ -72,7 +88,28 @@ map.on('load', function () {
     }
   });
 
+  
+
+  map.addSource('nycha_layer', {
+    'type': 'vector',
+    'url': 'mapbox://henxiaoye.4rw0t0qkofy7'
+  });
+
+  map.addLayer({
+    'id': 'nycha_developments',
+    'type': 'fill',
+    'source': 'nycha_layer',
+    'source-layer': '70ad32115fff27ee8930',
+    'paint': {
+      'fill-color': '#f28cb1',
+      'fill-opacity': 0.8,
+      'fill-outline-color': '#ffffff'
+    }
+  });
+
 });
+
+
 </script>
 
 </body>
