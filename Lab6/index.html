@@ -53,6 +53,26 @@ const map = new mapboxgl.Map({
   center: [-73.935242, 40.730610],
   zoom: 12
 });
+
+map.on('load', function () {
+
+  map.addSource('sandy_layer', {
+    'type': 'vector',
+    'url': 'mapbox://henxiaoye.o61x5k44pbn2'
+  });
+
+  map.addLayer({
+    'id': 'flood_zones',
+    'type': 'fill',
+    'source': 'sandy_layer',
+    'source-layer': 'b50874e4c083528d55e1',
+    'paint': {
+      'fill-color': '#00158f',
+      'fill-opacity': 0.5
+    }
+  });
+
+});
 </script>
 
 </body>
