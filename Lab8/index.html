@@ -45,14 +45,41 @@
       Sandy Inundation Zone
       <input id='floodZones' type='checkbox' name='viz-toggle' checked='checked'>
     </label>
-  <label class='check-container'>
-      NYCHA Buildings
-      <input id='nychaBuildings' type='checkbox' name='viz-toggle' checked='checked'>
-  </label>
+
+<label class='check-container'>
+              Affordable Housing Types
+              <input id='affHousing' type='checkbox' name='viz-toggle' checked='checked'>
+          </label>
+          <label class='check-container'>Co-Op
+              <span class="legend-key" style='background:#e41a1c'></span>
+          </label>
+          <label class='check-container'>Shelter
+              <span class="legend-key" style='background:#377eb8'></span>
+          </label>
+          <label class='check-container'>HPD subsidized
+              <span class="legend-key" style='background:#4daf4a'></span>
+          </label>
+          <label class='check-container'>Mobile Home
+              <span class="legend-key" style='background:#984ea3'></span>
+          </label>
+          <label class='check-container'>Public Housing
+              <span class="legend-key" style='background:#ff7f00'></span>
+          </label>
+          <label class='check-container'>Single-Residency Housing
+              <span class="legend-key" style='background:#a65628'></span>
+          </label>
+          <label class='check-container'>Other
+              <span class="legend-key" style='background:#cccccc'></span>
+          </label>
+   
+
+
   <label class='check-container'>
       +300 People Below Poverty Line
       <input id='povertyLevel' type='checkbox' name='viz-toggle' checked='checked'>
   </label>
+     <br>
+
   <label class='check-container'>
       2020 floodplain (100-year)
       <input id='f20_100' type='checkbox' name='viz-toggle' checked='checked'>
@@ -114,10 +141,16 @@
       'url': 'mapbox://henxiaoye.o61x5k44pbn2'
     });
 
-    map.addSource('nychaLayer',{
-      'type':'vector',
-      'url': 'mapbox://henxiaoye.4rw0t0qkofy7'
+
+    map.addSource('affHousingLayer', {
+      'type': 'vector',
+      'url': 'mapbox://iamwfx.ab4g098q'
     });
+
+//    map.addSource('nychaLayer',{
+//      'type':'vector',
+//      'url': 'mapbox://henxiaoye.4rw0t0qkofy7'
+//    });
 
 
 // Flood plains
@@ -160,7 +193,7 @@
       'source':'censusLayer',
       'source-layer':'nyc_blck_grp_2020_wcensus_dro-4db43i',
       'paint':{
-        'fill-color': '#006d2c',
+        'fill-color': '#f5ef42',
 'fill-opacity': [
   'step',
   ['get', 'AMR5E002'],
@@ -171,15 +204,38 @@
     });
 
     map.addLayer({
-      'id':'nychaBuildings',
-      'type':'fill',
-      'source':'nychaLayer',
-      'source-layer':'70ad32115fff27ee8930',
-      'paint':{
-        'fill-color':'red',
-        'fill-opacity': 0.5
+      'id': 'affHousing',
+      'type': 'line',
+      'source': 'affHousingLayer',
+      'source-layer': 'PLUTO_HOUS_TYPE_MASTER_Featu-7b5u7f',
+      'paint': {
+        'line-color': [
+          'match',
+          ['get', 'hous_type'],
+          'coop',     '#e41a1c',
+          'homeless', '#377eb8',
+          'hpd_sub',  '#4daf4a',
+          'mob_home', '#984ea3',
+          'pub_hou',  '#ff7f00',
+          'sro',      '#a65628',
+          '#cccccc'
+        ],
+        'line-opacity': 0.8,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 13, 2, 18, 10]
       }
     });
+
+
+//    map.addLayer({
+//      'id':'nychaBuildings',
+//      'type':'fill',
+//      'source':'nychaLayer',
+//      'source-layer':'70ad32115fff27ee8930',
+//      'paint':{
+//        'fill-color':'red',
+//        'fill-opacity': 0.5
+//      }
+//    });
 
     map.addLayer({
       'id':'floodZones',
@@ -263,7 +319,7 @@
 
 map.setLayoutProperty('floodZones',"visibility", "visible");
 map.setLayoutProperty('povertyLevel',"visibility", "visible");
-map.setLayoutProperty('nychaBuildings',"visibility", "visible");
+map.setLayoutProperty('affHousing',"visibility", "visible");
  map.setLayoutProperty('f20_100',"visibility", "visible");
     map.setLayoutProperty('f20_500',"visibility", "visible");
     map.setLayoutProperty('f50_100',"visibility", "visible");
