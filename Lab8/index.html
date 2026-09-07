@@ -36,7 +36,7 @@
 	<div class="map-overlay">
 	<div class="map-overlay-inner">
 	<h2>Public and Affordable Housing Flood Risk</h2>
-  <p>In the fall of 2012, New York City was hit with hurricane that left tens of thousands of public housing residents <a href = "https://www1.nyc.gov/site/nycha/about/press/pr-2012/nycha-has-restored-power-to-buildings-affected-by-hurricane-sandy.page">without power for days or even weeks]</a>. New York City Housing Authority public housing developments were affected. <a href="https://furmancenter.org/files/publications/SandysEffectsOnHousingInNYC.pdf">24,000 government-subsidized apartments and 40,000 rent-stabilized apartments were also affected</a>.</p>
+  <p>In the fall of 2012, New York City was hit with hurricane that left tens of thousands of public housing residents <a href = "https://www1.nyc.gov/site/nycha/about/press/pr-2012/nycha-has-restored-power-to-buildings-affected-by-hurricane-sandy.page">without power for days or even weeks</a>. New York City Housing Authority public housing developments were affected. <a href="https://furmancenter.org/files/publications/SandysEffectsOnHousingInNYC.pdf">24,000 government-subsidized apartments and 40,000 rent-stabilized apartments were also affected</a>.</p>
 
   <p>With rising sea levels from climate change and the <a href="https://www.nytimes.com/2017/04/18/magazine/when-rising-seas-transform-risk-into-certainty.html">promise</a> of more flooding, which areas and <i>who</i> will likely be most affected? How is affordable housing construction responding to this? </p>
 	</div>
@@ -47,7 +47,7 @@
   mapboxgl.accessToken = 'pk.eyJ1IjoiaGVueGlhb3llIiwiYSI6ImNtdHA5NnhucDBpN3IyenBybTljbTBraXUifQ.hFhS4lMNxJ6FrxPMAUpdpw';
   const map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/iamwfx/cl9519asg003414pl56w7ov95', // replace this with your style URL
+    style: 'mapbox://styles/henxiaoye/cmtp885n700ik01s255ygezzn', // replace this with your style URL
     center: [-73.935242, 40.730610], // The convention for coordinates is  typically [long, lat]
     zoom: 13,
     // maxZoom: 22,
@@ -56,6 +56,11 @@
 
   map.on('load',function(){
     // Give your layer's source a nickname you'll remember easily.
+
+    map.addSource('censusLayer',{
+      'type':'vector',
+      'url': 'mapbox://iamwfx.6nowkujs'
+    });
 
     map.addSource('sandyLayer',{
       'type':'vector',
@@ -70,6 +75,22 @@
     // add a new layer with your polygons
 
     map.addLayer({
+      'id':'povertyLevel',
+      'type':'fill',
+      'source':'censusLayer',
+      'source-layer':'nyc_blck_grp_2020_wcensus_dro-4db43i',
+      'paint':{
+        'fill-color': '#006d2c',
+'fill-opacity': [
+  'step',
+  ['get', 'AMR5E002'],
+  0,
+  300, 0.8
+]
+      }
+    });
+
+    map.addLayer({
       'id':'nychaBuildings',
       'type':'fill',
       'source':'nychaLayer',
@@ -78,7 +99,7 @@
         'fill-color':'red',
         'fill-opacity': 0.5
       }
-    })
+    });
 
     map.addLayer({
       'id':'floodZones',

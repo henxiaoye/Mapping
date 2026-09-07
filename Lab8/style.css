@@ -10,12 +10,14 @@ body {
 .map-overlay {
   font-family: 'Montserrat', sans-serif;
   position: fixed;
-  width: 30%;
+  width: 25%;
   top: 0;
   left: 0;
   background-color: #fff;
   border-radius: 3px;
   margin: 10px;
+  max-height: 90%;         /* 最高不超过窗口的 90% */
+  overflow-y: auto        /* 内容超出时内部滚动，而不是撑破 */
 }
 
 .map-overlay-inner {
