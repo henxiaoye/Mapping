@@ -125,7 +125,9 @@
     center: [-73.935242, 40.730610], // The convention for coordinates is  typically [long, lat]
     zoom: 13,
     // maxZoom: 22,
-    // minZoom: 12
+    // minZoom: 
+    pitch: 55,
+    bearing: -20
   });
 
   map.on('load',function(){
@@ -345,7 +347,6 @@ map.setLayoutProperty('affHousing',"visibility", "visible");
     checkboxes[i].onclick = switchLayer;
   }
 
-});
 
 
 
@@ -390,6 +391,17 @@ map.setLayoutProperty('affHousing',"visibility", "visible");
       map.getCanvas().style.cursor = '';
       popup.remove();
     });
+
+     map.on('click', 'affHousing', function(e) {
+      const coordinates = e.features[0].geometry.coordinates[0][0];
+      map.flyTo({
+        center: coordinates,
+        zoom: 17,
+        pitch: 70,
+        duration: 3000
+      });
+    });
+ });
 
   // Within a script, you comment using two backslashes.
   </script>
